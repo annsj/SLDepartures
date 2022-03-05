@@ -1,0 +1,42 @@
+﻿@using Models.Departure;
+
+
+@code {
+    [Parameter]
+    public Departures departures { get; set; }
+
+
+}
+
+<h5>Buss</h5>
+
+@if (departures.ResponseData!= null && departures.ResponseData.Buses.Count() != 0)
+{
+    <table class="table table-sm">
+        <thead>
+            <tr>
+                <th scope="col">Linje</th>
+                <th scope="col">Tid</th>
+                <th scope="col">Destination</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var bus in departures.ResponseData.Buses)
+            {
+                <tr class="border-bottom">
+                    <th scope="row">@bus.LineNumber</th>
+                    <td>@bus.DisplayTime</td>
+                    <td>@bus.Destination</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+else
+{
+    <p>Hittade inga avgångar</p>
+}
+
+
+

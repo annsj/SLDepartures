@@ -1,0 +1,40 @@
+﻿@using Models.Departure;
+
+
+@code {
+    [Parameter]
+    public Departures departures { get; set; }
+
+
+}
+
+<h5>Tunnelbana</h5>
+
+@if (departures.ResponseData != null && departures.ResponseData.Metros.Count() != 0)
+{
+    <table class="table table-sm">
+        <thead>
+            <tr>
+                <th scope="col">Linje</th>
+                <th scope="col">Tid</th>
+                <th scope="col">Destination</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var metro in departures.ResponseData.Metros)
+            {
+                <tr class="border-bottom">
+                    <th scope="row">@metro.LineNumber</th>
+                    <td>@metro.DisplayTime</td>
+                    <td>@metro.Destination</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+else
+{
+    <p>Hittade inga avgångar</p>
+}
+

@@ -1,0 +1,138 @@
+﻿@page
+@model SLWebApp.Pages.IndexModel
+
+@inject Microsoft.Extensions.Configuration.IConfiguration _configuration;
+
+@{
+    ViewData["Title"] = "Home page";
+    int i = 0;
+    string stopName = "";
+}
+
+@*<div class="text-center important">
+        <h1 class="display-4">SL avgångar</h1>
+    </div>*@
+
+<div class="text-center">
+    <h1 class="display-4">SL avgångar</h1>
+</div>
+
+<div class="row pt-5">
+    <div class="col">
+        <div>
+            <h4>@_configuration["MyStopName1"]</h4>
+        </div>
+        <component type="typeof(Components.BusList)" render-mode="ServerPrerendered" param-departures="Model.MyDepartures1" />
+
+        <div>
+            <h4>@_configuration["MyStopName2"]</h4>
+        </div>
+        <component type="typeof(Components.TramList)" render-mode="ServerPrerendered" param-departures="Model.MyDepartures2" />
+    </div>
+
+    <div class="col">
+        <form method="post">
+            <div class="form-group">
+                <div class="input-group mb-3">
+                    <input asp-for="SearchString" placeholder="Sök hållplats" />
+                    <button type="submit" class=" btn btn-outline-secondary btn-sm">Sök</button>
+                </div>
+            </div>
+        </form>
+
+        <hr />
+        <hr />
+
+        @if (Model.StopSelects != null && Model.StopSelects.Count != 0)
+        {
+            <p class="font-weight-bold  mb-0">Välj hållplats</p>
+            <form method="post">
+                @foreach (var stop in Model.StopSelects)
+                {
+                    if (stop.SiteId == Model.SelectedStopId)
+                    {
+                        <div class="form-check">
+                            <input type="radio" class="custom-radio" name="SelectedStopId" id="@stop.SiteId" value="@stop.SiteId" checked />
+                            <label class="mb-0" for="@stop.SiteId" style="cursor:pointer">@stop.Name</label>
+                        </div>
+                    }
+                    else if (i == 0 && (Model.SelectedStopId == null || !Model.SelectedStopId.Contains(stop.SiteId)))
+                    {
+                        <div class="form-check">
+                            <input type="radio" class="custom-radio" name="SelectedStopId" id="@stop.SiteId" value="@stop.SiteId" checked />
+                            <label class="mb-0" for="@stop.SiteId" style="cursor:pointer">@stop.Name</label>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="form-check">
+                            <input type="radio" class="custom-radio" name="SelectedStopId" id="@stop.SiteId" value="@stop.SiteId" />
+                            <label class="mb-0" for="@stop.SiteId" style="cursor:pointer">@stop.Name</label>
+                        </div>
+
+                    }
+                    <!---@(i++)--->
+                }
+
+                <p class="font-weight-bold mb-0 mt-1">Välj färdsätt</p>
+                @for (int i = 0; i < Model.TransportModes.Count; i++)
+                {
+                    <div class="form-check">
+                        <input type="hidden" asp-for="TransportModes[i].Name" />
+                        <input asp-for="TransportModes[i].IsSelected" />
+                        <label class="mb-0">@Model.TransportModes[i].Name</label>
+                    </div>
+                }
+
+                <div>
+                    <button type="submit" class="btn btn-outline-secondary btn-sm mt-2">Sök resa</button>
+                </div>
+
+            </form>
+            <hr />
+            <hr />
+        }
+    </div>
+
+
+    <div class="col">
+        @if (Model.SelectedStopId != null && Model.StopSelects.Select(s => s.SiteId).Contains(Model.SelectedStopId))
+        {
+            <!---@(stopName = Model.StopSelects.Where(s => s.SiteId == Model.SelectedStopId).FirstOrDefault().Name)--->
+            <div>
+                <h4>@stopName</h4>
+            </div>
+            @if (Model.TransportModes[0].IsSelected)
+            {
+                <component type="typeof(Components.BusList)" render-mode="ServerPrerendered" param-departures="Model.Departures" />
+            }
+            @if (Model.TransportModes[1].IsSelected)
+            {
+                <component type="typeof(Components.MetroList)" render-mode="ServerPrerendered" param-departures="Model.Departures" />
+            }
+            @if (Model.TransportModes[2].IsSelected)
+            {
+                <component type="typeof(Components.TramList)" render-mode="ServerPrerendered" param-departures="Model.Departures" />
+            }
+            @if (Model.TransportModes[3].IsSelected)
+            {
+                <component type="typeof(Components.TrainList)" render-mode="ServerPrerendered" param-departures="Model.Departures" />
+            }
+            @if (Model.TransportModes[4].IsSelected)
+            {
+                <component type="typeof(Components.ShipList)" render-mode="ServerPrerendered" param-departures="Model.Departures" />
+            }
+        }
+    </div>
+
+</div>
+<br />
+
+
+
+
+
+
+
+
+
