@@ -40,7 +40,7 @@ namespace SLWebApp.Models.Departure
         public int StopPointNumber { get; set; }
         public string StopPointDesignation { get; set; }
         public DateTime TimeTabledDateTime { get; set; }
-        public DateTime ExpectedDateTime { get; set; }
+        public DateTime? ExpectedDateTime { get; set; }
         public int JourneyNumber { get; set; }
     }
 
@@ -56,7 +56,7 @@ namespace SLWebApp.Models.Departure
         public int StopPointNumber { get; set; }
         public string StopPointDesignation { get; set; }
         public DateTime TimeTabledDateTime { get; set; }
-        public DateTime ExpectedDateTime { get; set; }
+        public DateTime? ExpectedDateTime { get; set; }
         public string DisplayTime { get; set; }
         public int JourneyNumber { get; set; }
     }
@@ -76,7 +76,7 @@ namespace SLWebApp.Models.Departure
         public int StopPointNumber { get; set; }
         public string StopPointDesignation { get; set; }
         public DateTime TimeTabledDateTime { get; set; }
-        public DateTime ExpectedDateTime { get; set; }
+        public DateTime? ExpectedDateTime { get; set; }
         public string DisplayTime { get; set; }
         public int JourneyNumber { get; set; }
     }
@@ -93,7 +93,7 @@ namespace SLWebApp.Models.Departure
         public int StopPointNumber { get; set; }
         public string StopPointDesignation { get; set; }
         public DateTime TimeTabledDateTime { get; set; }
-        public DateTime ExpectedDateTime { get; set; }
+        public DateTime? ExpectedDateTime { get; set; }
         public string DisplayTime { get; set; }
         public int JourneyNumber { get; set; }
     }
@@ -110,7 +110,7 @@ namespace SLWebApp.Models.Departure
         public int StopPointNumber { get; set; }
         public string StopPointDesignation { get; set; }
         public DateTime TimeTabledDateTime { get; set; }
-        public DateTime ExpectedDateTime { get; set; }
+        public DateTime? ExpectedDateTime { get; set; }
         public string DisplayTime { get; set; }
         public int JourneyNumber { get; set; }
     }
